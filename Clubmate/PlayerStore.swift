@@ -13,7 +13,7 @@ class PlayerStore: ObservableObject {
     @Published var players: [Player] = []
     @Published var duplicateScanAlert = false
     
-    struct Player: Identifiable {
+    struct Player: Identifiable, Equatable {
         let id = UUID()
         var name: String
     }
