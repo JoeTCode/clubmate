@@ -13,14 +13,11 @@ struct ContentView: View {
     @FocusState private var editListFocused: Bool
     @State private var enableRowEdit = false
     @State private var customPlayer = ""
+    @State private var editMode: EditMode = .inactive
     
     struct Player: Identifiable {
         let id = UUID()
         var name: String
-    }
-    
-    func deletePlayer(at offsets: IndexSet) {
-        self.playerStore.players.remove(atOffsets: offsets)
     }
     
     func addPlayer(name: String) {
@@ -47,58 +44,26 @@ struct ContentView: View {
                 HStack {
                     Text("Players: \(self.playerStore.totalPlayers())")
                     Spacer()
-                    if (self.playerStore.totalPlayers() > 0) {
-                        if (enableRowEdit) {
-                            Button("Done") {
-                                enableRowEdit = false
-                            }
-                        } else {
-                            Button("Edit") {
-                                enableRowEdit = true
-                            }
+                }
+
+                List {
+                    ForEach($playerStore.players) { $player in
+                        if (!enableRowEdit) {
+                            Text(player.name)
+                                .font(.system(size: 24))
+                                .listRowBackground(Color.init(white: 0.95))
+                        }
+                        else {
+                            TextField("", text: $player.name)
+                                .focused($editListFocused)
+                                .font(.system(size: 24))
+                                .listRowBackground(Color.init(white: 0.95))
                         }
                     }
-                }
-                if (self.playerStore.totalPlayers() == 0) {
-                    VStack {
-                        Text("No players found")
+                    .onDelete { offsets in
+                        self.playerStore.players.remove(atOffsets: offsets)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .border(Color.init(white: 0.95), width: 2)
-                    .cornerRadius(15)
-                }
-                else {
-                    List {
-                        ForEach($playerStore.players) { $player in
-                            if (!enableRowEdit) {
-                                Text(player.name)
-                                    .font(.system(size: 24))
-                                    .listRowBackground(Color.init(white: 0.95))
-                            }
-                            else {
-                                TextField("", text: $player.name)
-                                    .focused($editListFocused)
-                                    .font(.system(size: 24))
-                                    .listRowBackground(Color.init(white: 0.95))
-                            }
-                        }
-                        .onDelete(perform: deletePlayer)
-                    }
-                    .toolbar {
-                        if (editListFocused) {
-                            ToolbarItem(placement: .keyboard) {
-                                Button("Done") {
-                                    editListFocused = false
-                                    enableRowEdit = false
-                                }
-                            }
-                        }
-                    }
-                    .scrollContentBackground(.hidden)
-                    .border(Color.init(white: 0.95), width: 2)
-                }
-                
-                VStack {
+                    
                     HStack {
                         TextField("", text: $customPlayer, prompt: Text("Manually add player").foregroundStyle(Color.gray))
                             .focused($scanButtonFocused)
@@ -112,19 +77,41 @@ struct ContentView: View {
                                     }
                                 }
                             }
-                        
-    
+                    
                         Button (action: {
                             addPlayer(name: customPlayer)
                         }) {
                             Image(systemName: "plus")
                         }
                     }
-                    .padding()
-                    .border(Color.gray, width: 1)
-                    .background(Color.init(white: 0.95))
-                    .cornerRadius(16)
-                    
+                        .padding()
+                        .background(Color.init(white: 0.95))
+                        .clipShape(
+                            .rect(
+                                topLeadingRadius: 18,
+                                bottomLeadingRadius: 18,
+                                bottomTrailingRadius: 18,
+                                topTrailingRadius: 18
+                            )
+                        )
+                }
+                .environment(\.editMode, $editMode)
+                .toolbar {
+                    Button(editMode == .active ? "Done" : "Edit") {
+                        if (editMode == .active) {
+                            editMode = .inactive
+                            enableRowEdit = false
+                            editListFocused = false
+                        } else {
+                            editMode = .active
+                            enableRowEdit = true
+                        }
+                    }
+                }
+                .scrollContentBackground(.hidden)
+                .border(Color.init(white: 0.95), width: 2)
+            
+                VStack {
                     Button("Scan") {
                         nfcController.startScan()
                     }
