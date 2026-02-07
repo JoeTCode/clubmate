@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-struct PlayerList: View {
+struct PlayerListView: View {
     @StateObject private var nfcController = NFCController()
     @StateObject private var playerStore = PlayerStore.shared
     @FocusState private var scanButtonFocused: Bool
@@ -97,7 +97,10 @@ struct PlayerList: View {
                 }
             }
             .scrollContentBackground(.hidden)
-            .border(Color.init(white: 0.95), width: 2)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.init(white: 0.95), lineWidth: 2)
+            )
         
             VStack {
                 Button("Scan") {

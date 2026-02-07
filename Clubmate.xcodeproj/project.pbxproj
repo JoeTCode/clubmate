@@ -10,9 +10,22 @@
 		02FC39AD2F1FB0E10081962A /* Clubmate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clubmate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		02D562482F3776E6008903B0 /* Exceptions for "Clubmate" folder in "Clubmate" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 02FC39AC2F1FB0E10081962A /* Clubmate */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		02FC39AF2F1FB0E10081962A /* Clubmate */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				02D562482F3776E6008903B0 /* Exceptions for "Clubmate" folder in "Clubmate" target */,
+			);
 			path = Clubmate;
 			sourceTree = "<group>";
 		};
@@ -256,6 +269,7 @@
 				DEVELOPMENT_TEAM = JW7L36H5G3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Clubmate/Info.plist;
 				INFOPLIST_KEY_NFCReaderUsageDescription = "We require NFC scan to automatically and easily read player data.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -293,6 +307,7 @@
 				DEVELOPMENT_TEAM = JW7L36H5G3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Clubmate/Info.plist;
 				INFOPLIST_KEY_NFCReaderUsageDescription = "We require NFC scan to automatically and easily read player data.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

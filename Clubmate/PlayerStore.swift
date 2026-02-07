@@ -6,6 +6,8 @@
 
 import Foundation
 import Combine
+import SwiftUI
+
 
 class PlayerStore: ObservableObject {
     static let shared = PlayerStore()
@@ -13,8 +15,8 @@ class PlayerStore: ObservableObject {
     @Published var players: [Player] = []
     @Published var duplicateScanAlert = false
     
-    struct Player: Identifiable, Equatable {
-        let id = UUID()
+    struct Player: Codable, Identifiable, Equatable {
+        var id = UUID()
         var name: String
     }
     

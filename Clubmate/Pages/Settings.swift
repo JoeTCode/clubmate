@@ -14,3 +14,16 @@ class Settings: ObservableObject {
     @Published var maxPlayersPerCourt = 4
 
 }
+
+struct SettingsView: View {
+    var body: some View {
+        VStack {
+            Text("Settings")
+            
+        }
+    }
+}
+
+#Preview {
+    ContentView()
+}
